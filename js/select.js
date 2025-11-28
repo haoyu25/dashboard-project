@@ -11,8 +11,6 @@ export function initSelect() {
 
     features.sort((a,b) => a.name.localeCompare(b.name));
 
-    searchSelect.innerHTML = '<option value="">--Select a feature--</option>';
-
     features.forEach(f => {
         const option = document.createElement('option');
         option.value = f.name;
@@ -34,3 +32,4 @@ export function initSelect() {
         window.metroLayer.eachLayer(l => { if(l !== layer) l.setStyle({ fillOpacity: 0.8 }); });
     });
 }
+

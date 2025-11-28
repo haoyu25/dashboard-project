@@ -52,7 +52,7 @@ function calImpervious(feature) {
 
   const r = Math.round(255 * pct);
   const g = Math.round(255 * (1 - pct));
-  const b = 0;
+  const b = 100;
 
   const color = `rgb(${r},${g},${b})`;
 
@@ -68,9 +68,9 @@ function calImpervious(feature) {
 function calInundation(feature) {
   const inund = feature.properties.inund_mean;
 
-  const r = Math.round(255 * inund);
+  const r = 100;
   const g = Math.round(255 * (1 - inund));
-  const b = 0;
+  const b = Math.round(255 * inund);
 
   const color = `rgb(${r},${g},${b})`;
 

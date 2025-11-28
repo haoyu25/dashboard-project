@@ -13,14 +13,14 @@ const matrixLegend = `
 
 const imperviousLegend = `
 <b>Impervious</b><br>
-<div><span style="background:rgb(0,255,0);" class="legend-color"></span> Low</div>
-<div><span style="background:rgb(255,0,0);" class="legend-color"></span> High</div>
+<div><span style="background:rgb(0, 255, 100);" class="legend-color"></span> Low Percent</div>
+<div><span style="background:rgb(255,0,100);" class="legend-color"></span> High Percent</div>
 `;
 
 const inundationLegend = `
 <b>Inundation</b><br>
-<div><span style="background:rgb(0,255,0);" class="legend-color"></span> Low</div>
-<div><span style="background:rgb(255,0,0);" class="legend-color"></span> High</div>
+<div><span style="background:rgb(100,255,0);" class="legend-color"></span> Low Risk</div>
+<div><span style="background:rgb(100,0,255);" class="legend-color"></span> High Risk</div>
 `;
 
 export { matrixLegend, imperviousLegend, inundationLegend };

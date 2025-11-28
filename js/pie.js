@@ -64,17 +64,17 @@ export function initPieChart(matrix) {
                     color: '#ffffffff',
                     font: {
                         weight: 'bold',
-                        size: 12
+                        size: 10
                     },
                     anchor: 'end',    
                     align: 'end',   
-                    offset: 2,      
+                    offset: 0,      
                     formatter: (value, context) => {
                         return value;   
                     }
                 }
             }, 
-            radius: '70%' 
+            radius: '80%' 
         },
         plugins: [ChartDataLabels]  
     });

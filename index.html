@@ -1,92 +1,87 @@
 <!doctype html>
-
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <!-- add code to fit phone access -->
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Inundation Risk Index Dashboard</title>
 
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 
-    <title>Inundation Risk Index Dashboard</title>
-     <!-- add Leaflet CSS to control map: Styled Map Controls and Elements -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-    crossorigin=""/>
-     <!--own style -->
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nouislider@15.7.0/dist/nouislider.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/nouislider@15.7.0/dist/nouislider.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script> 
+<!-- Own CSS -->
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nouislider@15.7.0/dist/nouislider.min.css">
 
+<!-- JS libraries -->
+<script src="https://cdn.jsdelivr.net/npm/nouislider@15.7.0/dist/nouislider.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+</head>
 
-  </head>
+<body>
+<header>
+    <h1>Inundation Risk Index in Hangzhou Center Districts</h1>
+</header>
 
-  <body>
-    <header>
-         <h1>Inundation Risk Index in Hangzhou Center Districts</h1>
-    </header>
-    <main>
-      <!-- add side in left first  -->
-      <div class="left-side">
-        <section class="address-section">
-          <fieldset>
-            <legend>Zoom into one category</legend>
-                <div class="category-buttons">
-                      <button id="setmatrix">Matrix</button>
-                      <button id="impervious">Impervious</button>
-                      <button id="inundation">Inundation</button>
-                 </div>
+<main>
+  <div class="left-side">
 
-                 <div id="slider-container">
-                    <label>Impervious Thresholds:</label>
-                    <div id="imp-slider"></div>
-                   <label>Inundation Thresholds:</label>
-                   <div id="inu-slider"></div>
-                </div>
-            <div class="">
+    <label>Zoom into one category</label>
 
-            </div>
-          </fieldset>
-        </section>
-
-      <div class="pie-section">
-           <h3>Risk Units Distribution</h3>
-           <canvas id="riskPieChart" width="200" height="200"></canvas>
+    <section class="control-section">
+      <div class="category-buttons">
+        <button id="setmatrix">Matrix</button>
+        <button id="impervious">Impervious</button>
+        <button id="inundation">Inundation</button>
+        <button id="reset">Reset</button>
       </div>
 
-        <input type="text" id="entry" placeholder="Type metro station here..." autocomplete="off">
-        <button id="clear-entry">
-          <svg width="15px" height="15px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-             <g id="SVGRepo_iconCarrier"> <path d="M19 5L5 19M5.00001 5L19 19" stroke="#838181" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> 
-            </g>
-          </svg>
-        </button>
-        
-        <div id="search-suggestions" class="suggestions-box"></div>
-
-        <div class="select-section">
-          <label for="select">Search Parks or Metro:</label>
-           <select id="select">
-            <option value="">--Select a station--</option>
-           </select>
-        </div>
-
+      <div id="slider-container">
+        <label>Impervious Thresholds:</label>
+        <div id="imp-slider"></div>
+        <label>Inundation Thresholds:</label>
+        <div id="inu-slider"></div>
       </div>
-      <!-- then add map  -->
-      <div id="map" class="map"></div>
+    </section>
 
-    </main>
-        
-    <!-- add leaflet library -->  
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"  
-    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-    crossorigin=""></script>  
-    <!-- add TURF library -->  
-    <script src='https://unpkg.com/@turf/turf@6/turf.min.js'></script>  
-    <!-- link js file -->
-    <script type="module" src="js/main.js"></script>
-  </body>
+    <label>Risk Units Distribution</label>
+
+    <section class="pie-section">
+      <canvas id="riskPieChart"></canvas>
+    </section>
+
+    <label>Search & Filter</label>
+
+    <section class="search-section">
+      <div id="search-wrapper">
+        <input id="entry" type="text" placeholder="Search a station or amenity">
+        <button id="clear-entry">x</button>
+        <div id="search-suggestions"></div>
+      </div>
+
+      <div class="selects-row">
+        <select id="select">
+          <option value="">--Select a station--</option>
+        </select>
+        <select id="select-amenity">
+          <option value="">--Select an amenity--</option>
+        </select>
+      </div>
+    </section>
+  </div>
+
+  <!-- Map -->
+  <div id="map" class="map"></div>
+</main>
+
+<!-- Leaflet & Turf -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+ integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
+
+<!-- Main JS -->
+<script type="module" src="js/main.js"></script>
+
+</body>
 </html>
