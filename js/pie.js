@@ -64,7 +64,7 @@ export function initPieChart(matrix) {
                     color: '#ffffffff',
                     font: {
                         weight: 'bold',
-                        size: 10
+                        size: 12
                     },
                     anchor: 'end',    
                     align: 'end',   

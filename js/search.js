@@ -8,9 +8,6 @@ export function initSearch() {
         return;
     }
 
-    // --------------------------------
-    // 1. 生成搜索数据
-    // --------------------------------
     const features = [];
 
     function collectFeatures(layerGroup, type) {
@@ -32,9 +29,6 @@ export function initSearch() {
 
     features.sort((a, b) => a.name.localeCompare(b.name));
 
-    // --------------------------------
-    // 2. 输入监听
-    // --------------------------------
     input.addEventListener('input', () => {
         const text = input.value.trim().toLowerCase();
         suggestionsDiv.innerHTML = '';
@@ -54,17 +48,12 @@ export function initSearch() {
         });
     });
 
-    // --------------------------------
-    // 3. 选择搜索结果
-    // --------------------------------
     function handleSelect(f) {
         const layer = f.layer;
         const latlng = layer.getLatLng();
 
-        // 移动地图
         window.matrixMap.setView(latlng, 13);
 
-        // 重置所有 icon & 隐藏所有 amenity
         resetAllIcons();
 
         if (f.type === "metro") {
@@ -75,13 +64,11 @@ export function initSearch() {
                 window.amenityIconsHighlight?.[cat] || window.defaultAmenityIconHighlight;
             layer.setIcon(highlightIcon);
 
-            // 只显示选中的 amenity
             if (!window.matrixMap.hasLayer(layer)) {
                 window.matrixMap.addLayer(layer);
             }
         }
 
-        // tooltip label
         if (layer._label) {
             window.matrixMap.removeLayer(layer._label);
         }
@@ -95,17 +82,12 @@ export function initSearch() {
         .setLatLng(latlng);
         window.matrixMap.addLayer(layer._label);
 
-        // 输入框填入内容 & 清空建议
         input.value = f.name;
         suggestionsDiv.innerHTML = '';
         suggestionsDiv.style.display = 'none';
     }
 
-    // --------------------------------
-    // 4. reset all icons & 隐藏所有 amenity
-    // --------------------------------
     function resetAllIcons() {
-        // metro
         window.metroLayer.eachLayer(l => {
             if (l.setIcon) l.setIcon(window.metroIcon);
             if (l._label) {
@@ -114,7 +96,6 @@ export function initSearch() {
             }
         });
 
-        // amenity 默认隐藏
         window.amenityLayer.eachLayer(l => {
             if (window.matrixMap.hasLayer(l)) {
                 window.matrixMap.removeLayer(l);
@@ -129,9 +110,6 @@ export function initSearch() {
         });
     }
 
-    // --------------------------------
-    // 5. 清空按钮
-    // --------------------------------
     clearBtn.addEventListener('click', () => {
         input.value = '';
         suggestionsDiv.innerHTML = '';
@@ -139,9 +117,6 @@ export function initSearch() {
         resetAllIcons();
     });
 
-    // --------------------------------
-    // 6. 点击空白隐藏建议
-    // --------------------------------
     document.addEventListener('click', (e) => {
         if (!input.contains(e.target) && !suggestionsDiv.contains(e.target)) {
             suggestionsDiv.innerHTML = '';

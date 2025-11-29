@@ -14,8 +14,26 @@ header {
     padding: 0;
     background: linear-gradient(0deg, rgba(67, 92, 92, 0.75) 0%, rgb(66, 77, 92) 100%);
     display: flex;
-    align-items: left;
-    justify-content: left;
+    align-items: center;
+    justify-content: space-between; 
+    padding: 0 1rem;  
+}
+
+#lang-toggle {
+    padding: 6px 16px;
+    border: 2px solid #fff;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+#lang-toggle:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
 }
 
 h1 {
@@ -183,28 +201,27 @@ label {
 #search-wrapper {
     position: relative;
     width: 100%;
-}
-
-#search-container {
-    display: flex;
-    align-items: center;
+    display: flex;       
+    align-items: center;   
+    flex-wrap: wrap;       
 }
 
 #entry {
     flex: 1;
+    min-width: 0;
     padding: 6px 8px;
     border: 1px solid #ccc;
-    border-radius: 4px 0 0 4px;
+    border-radius: 4px;
     outline: none;
 }
 
 #clear-entry {
     width: 24px;
     height: 24px;
-    border: 1px solid #ccc;
-    border-left: 0;
-    border-radius: 0 4px 4px 0;
-    background: #f2f2f2;
+    border: 0px;
+    border-left: 1px;
+    border-radius: 4px;
+    background: #ffffff;
     cursor: pointer;
     padding: 0;
     line-height: 1;
@@ -212,7 +229,7 @@ label {
 
 #search-suggestions {
     position: absolute;
-    top: 100%;
+    bottom: 100%; 
     left: 0;
     right: 0;
     background: #fff;
@@ -222,6 +239,14 @@ label {
     overflow-y: auto;
     z-index: 1000;
     display: none;
+    font-size: 0.8rem;                      
+    color: #595959;                         
+    line-height: 1.4;              
+    padding: 4px 8px;                
+}
+
+#search-suggestions div:hover {
+    background-color: #f0f0f0;  
 }
 
 /* Selects side by side */
@@ -229,13 +254,51 @@ label {
     display: flex;
     gap: 10px;
     margin-top: 0.5rem;
+    width: 100%; 
 }
 
 .selects-row select {
     flex: 1;
-    padding: 4px 6px;
+    min-width: 0; 
+    padding: 6px 8px;
     border-radius: 4px;
     border: 1px solid #ccc;
+    background-color: #fff;
+    font-size: 0.8rem;
+    color: #6a6a6a;
+    cursor: pointer;
+    outline: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.selects-row select:hover {
+    border-color: #46707f;
+    background-color: #f9f9f9;
+}
+
+.selects-row select:focus {
+    border-color: #46707f;
+    box-shadow: 0 0 0 2px rgba(70, 112, 127, 0.2);
+}
+
+.selects-row select option {
+    padding: 6px 8px;
+    font-size: 0.8rem;
+    color: #595959;;
+    background-color: #fff;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.selects-row select option:hover {
+    background-color: #f0f0f0;
+}
+
+.selects-row select option:disabled {
+    color: #999;
 }
 
 /* Map */
@@ -256,7 +319,7 @@ label {
 
 /* Legend */
 .legend-box {
-    background: rgba(255, 255, 255, 0.354);
+    background: rgba(255, 255, 255, 0.567);
     border-radius: 6px;
     font-size: 0.85rem;
     line-height: 18px;
@@ -271,3 +334,5 @@ label {
     margin-right: 6px;
     vertical-align: middle;
 }
+
+/* map */
