@@ -363,17 +363,15 @@ label {
 /* ----------- Mobile Responsive ----------- */
 @media (max-width: 768px) {
     main {
-        flex-direction: column;  /* 地图在上，面板在下 */
+        flex-direction: column; 
         height: 100vh;
     }
 
-    /* 地图占上 40% */
     .map {
         height: 40vh !important;
-        order: -1;  /* 放到最上 */
+        order: -1;  
     }
 
-    /* 面板占下 60% */
     .left-side {
         width: 100%;
         height: 60vh;
