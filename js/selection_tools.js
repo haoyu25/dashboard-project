@@ -5,69 +5,69 @@ export function initSelectionTools() {
 
     // 更新选中数量
     function updateCount() {
-        if (!window.mapLayers) return;
-        const count = window.mapLayers.selectedLayers.size;
+        if (!window.mapLayers || !countElement) return;
+        const count = window.mapLayers.selectedLayers.size || 0;
         countElement.textContent = count;
-        
-        // 如果没有选中，禁用导出按钮
-        exportBtn.disabled = count === 0;
+
+        if (exportBtn) exportBtn.disabled = count === 0;
     }
 
     // 清除所有选中
-    clearBtn.addEventListener('click', () => {
-        if (!window.mapLayers) return;
-        
-        window.mapLayers.selectedLayers.forEach(layer => {
-            L.DomUtil.removeClass(layer._path, "hex-selected");
-            layer.unbindTooltip();
+    if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+            if (!window.mapLayers) return;
+
+            window.mapLayers.selectedLayers.forEach(layer => {
+                if (layer._path) L.DomUtil.removeClass(layer._path, "hex-selected");
+                if (layer.unbindTooltip) layer.unbindTooltip();
+            });
+            window.mapLayers.selectedLayers.clear();
+
+            // 清除 pie chart 选中状态
+            if (window.pieChartControls && typeof window.pieChartControls.clearSelection === 'function') {
+                window.pieChartControls.clearSelection();
+            }
+
+            updateCount();
         });
-        window.mapLayers.selectedLayers.clear();
-        
-        // 同时清除 pie chart 的选中状态
-        if (window.pieChartControls) {
-            window.pieChartControls.clearSelection();
-        }
-        
-        updateCount();
-    });
+    }
 
-    // 导出选中的 hexagons
-    exportBtn.addEventListener('click', () => {
-        if (!window.mapLayers || window.mapLayers.selectedLayers.size === 0) {
-            alert('No hexagons selected!');
-            return;
-        }
+    // 导出选中 hexagons
+    if (exportBtn) {
+        exportBtn.addEventListener('click', () => {
+            if (!window.mapLayers || window.mapLayers.selectedLayers.size === 0) {
+                alert('No hexagons selected!');
+                return;
+            }
 
-        const features = [];
-        
-        window.mapLayers.selectedLayers.forEach(layer => {
-            features.push(layer.feature);
+            const features = Array.from(window.mapLayers.selectedLayers, l => l.feature);
+
+            const geojson = {
+                type: "FeatureCollection",
+                features: features
+            };
+
+            const dataStr = JSON.stringify(geojson, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `selected_hexagons_${new Date().toISOString().slice(0, 10)}.geojson`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
         });
-
-        const geojson = {
-            type: "FeatureCollection",
-            features: features
-        };
-
-        // 创建下载
-        const dataStr = JSON.stringify(geojson, null, 2);
-        const blob = new Blob([dataStr], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `selected_hexagons_${new Date().toISOString().slice(0, 10)}.geojson`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(url);
-    });
+    }
 
     // 初始更新
     updateCount();
 
-    // 暴露更新函数
-    window.updateSelectionCount = updateCount;
+    // 挂载全局更新函数，保证 pie chart 可以调用
+    if (!window.updateSelectionCount) {
+        window.updateSelectionCount = updateCount;
+    }
 
     return { updateCount };
 }
