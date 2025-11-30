@@ -16,8 +16,11 @@ export async function initApp(resetLeftSide = false) {
     window.updateSelectionCount = () => {
         const countEl = document.getElementById('selected-count');
         if (!countEl) return;
-        const size = window.mapLayers.selectedLayers.size || 0;
-        countEl.textContent = size;
+        countEl.textContent = window.mapLayers.selectedLayers.size || 0;
+
+        // 如果没有选中，禁用导出按钮
+        const exportBtn = document.getElementById('export-selection');
+        if (exportBtn) exportBtn.disabled = window.mapLayers.selectedLayers.size === 0;
     };
 
     // ----------- 读取数据 -----------
@@ -77,12 +80,7 @@ export async function initApp(resetLeftSide = false) {
             marker.on('mouseover', () => {
                 if (marker.isClicking) return;
                 if (!marker.tooltipShown) {
-                    marker.bindTooltip(labelHtml, {
-                        permanent: true,
-                        direction: 'top',
-                        className: 'metro-label',
-                        opacity: 0.9
-                    }).openTooltip();
+                    marker.bindTooltip(labelHtml, { permanent: true, direction: 'top', className: 'metro-label', opacity: 0.9 }).openTooltip();
                     marker.tooltipShown = true;
                 }
             });
@@ -118,7 +116,7 @@ export async function initApp(resetLeftSide = false) {
         }
     });
 
-    // ----------- 初始化 Pie Chart -----------
+    // ----------- 初始化 Pie Chart ----------- 
     if (window.pieChart) window.pieChart.destroy();
     window.pieChart = initPieChart(matrix);
     window.updateSelectionCount(); // 初始化选中计数
@@ -129,9 +127,7 @@ export async function initApp(resetLeftSide = false) {
     amenitySelect();
 
     // ----------- 重置左侧面板 -----------
-    if (resetLeftSide) {
-        resetManager.resetLeftSide();
-    }
+    if (resetLeftSide) resetManager.resetLeftSide();
 }
 
 // ----------- 初始化语言切换和应用 -----------
@@ -140,6 +136,17 @@ await initApp(true);
 
 // ----------- Reset 按钮 -----------
 document.getElementById("reset").addEventListener("click", async () => {
+    // 清空 mapLayers 的 selectedLayers
+    if (window.mapLayers?.selectedLayers) {
+        window.mapLayers.selectedLayers.forEach(layer => {
+            L.DomUtil.removeClass(layer._path, "hex-selected");
+            layer.unbindTooltip();
+        });
+        window.mapLayers.selectedLayers.clear();
+    }
+    // 更新计数
+    if (window.updateSelectionCount) window.updateSelectionCount();
+
     await initApp(true);
 });
 
