@@ -13,7 +13,7 @@ function initializeMap(matrix) {
   map = L.map('map', { zoomSnap: 0 }).setView([30.25, 120.15], 11);
 
   const baseTileLayer = L.tileLayer(
-    'https://api.mapbox.com/styles/v1/junyiy/clng7r3oq083901qx0eu9gaor/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoianVueWl5IiwiYSI6ImNsdWVxcHowcDBxbWUyam92MWx5aW40MnkifQ.QR9kni83fZBO-EFBXAaX7g',
+    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
     {
       maxZoom: 19,
       zoomOffset: -1,
