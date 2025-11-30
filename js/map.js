@@ -13,7 +13,7 @@ function initializeMap(matrix) {
   map = L.map('map', { zoomSnap: 0 }).setView([30.25, 120.15], 11);
 
   const baseTileLayer = L.tileLayer(
-    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
     {
       maxZoom: 19,
       zoomOffset: -1,

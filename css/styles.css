@@ -12,7 +12,7 @@ html, body {
 header {
     height: 7vh;
     padding: 0;
-    background: linear-gradient(0deg, rgba(67, 92, 92, 0.75) 0%, rgb(66, 77, 92) 100%);
+    background: linear-gradient(0deg,  rgb(212, 218, 220) 100%);
     display: flex;
     align-items: center;
     justify-content: space-between; 
@@ -24,7 +24,7 @@ header {
     border: 2px solid #fff;
     border-radius: 20px;
     background: rgba(255, 255, 255, 0.2);
-    color: #fff;
+    color: #46707f;
     font-size: 0.9rem;
     font-weight: bold;
     cursor: pointer;
@@ -37,7 +37,7 @@ header {
 }
 
 h1 {
-    color: #fff;
+    color: #46707f;
     font-size: 1.8rem;
     margin: 0;
     padding: 0.5rem;
@@ -56,7 +56,7 @@ main {
     flex-direction: column;
     width: 30%;
     padding: 1rem;
-    background: rgba(123, 152, 152, 0.75);
+    background: rgb(242, 245, 242);
     overflow-y: auto;
     gap: 0.5rem; 
     box-sizing: border-box;
@@ -100,7 +100,7 @@ label {
 
 #selected-count {
     font-size: 16px;             
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: rgb(255, 255, 255);
     padding: 2px 6px;              
     border-radius: 4px;          
     display: inline-block;   
@@ -229,7 +229,7 @@ label {
 #clear-entry {
     width: 24px;
     height: 24px;
-    border: 0px;
+    border: 1px solid #ccc;
     border-left: 1px;
     border-radius: 4px;
     background: #ffffff;
