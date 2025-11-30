@@ -31,33 +31,47 @@ integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 <main>
   <div class="left-side">
 
-    <label>Zoom into one category</label>
+    <section class="instruction-section">
+      <p class="text">
+        This tool helps identify areas for inundation actions.
+      </p>
+      <ol class="text">
+        <li>
+          <strong>Category Selection:</strong> Adjust sliders and click pie chart segments.
+        </li>
+        <li>
+          <strong>Location Selection:</strong> Zoom in or use search/filter tools, then click hexagons.
+        </li>
+      </ol>
+    </section>
 
-    <section class="control-section">
+    <div class="selection-row">
+      <label>Selected Hexagons: <strong id="selected-count">0</strong></label>
+      <button id="clear-selection">Clear</button>
+      <button id="export-selection">Export</button>
+    </div>
+
+    <label>Category Selection</label>
+
+    <section class="category-section">
       <div class="category-buttons">
-        <button id="setmatrix">Matrix</button>
+        <button id="matrix">Matrix</button>
         <button id="impervious">Impervious</button>
         <button id="inundation">Inundation</button>
         <button id="reset">Reset</button>
       </div>
-
       <div id="slider-container">
         <label>Impervious Thresholds:</label>
         <div id="imp-slider"></div>
         <label>Inundation Thresholds:</label>
         <div id="inu-slider"></div>
       </div>
+      <canvas id="riskPieChart" width="150" height="150"></canvas>
     </section>
 
-    <label>Risk Units Distribution</label>
+    <label>Location Selection</label>
 
-    <section class="pie-section">
-      <canvas id="riskPieChart"></canvas>
-    </section>
-
-    <label>Search & Filter</label>
-
-    <section class="search-section">
+    <section class="location-section">
       <div id="search-wrapper">
         <input id="entry" type="text" 
         placeholder="Search a station/school/hospital/market">
