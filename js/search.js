@@ -53,7 +53,6 @@ export function initSearch() {
         const latlng = layer.getLatLng();
 
         window.matrixMap.setView(latlng, 15);
-
         resetAllIcons();
 
         if (f.type === "metro") {
@@ -69,9 +68,12 @@ export function initSearch() {
             }
         }
 
+        // 删除旧 label
         if (layer._label) {
             window.matrixMap.removeLayer(layer._label);
         }
+
+        // tooltip 永远显示
         layer._label = L.tooltip({
             permanent: true,
             direction: 'bottom',

@@ -3,7 +3,6 @@ export function initSelectionTools() {
     const clearBtn = document.getElementById('clear-selection');
     const exportBtn = document.getElementById('export-selection');
 
-    // 更新选中数量
     function updateCount() {
         if (!window.mapLayers || !countElement) return;
         const count = window.mapLayers.selectedLayers.size || 0;
@@ -12,7 +11,6 @@ export function initSelectionTools() {
         if (exportBtn) exportBtn.disabled = count === 0;
     }
 
-    // 清除所有选中
     if (clearBtn) {
         clearBtn.addEventListener('click', () => {
             if (!window.mapLayers) return;
@@ -23,7 +21,6 @@ export function initSelectionTools() {
             });
             window.mapLayers.selectedLayers.clear();
 
-            // 清除 pie chart 选中状态
             if (window.pieChartControls && typeof window.pieChartControls.clearSelection === 'function') {
                 window.pieChartControls.clearSelection();
             }
@@ -32,7 +29,6 @@ export function initSelectionTools() {
         });
     }
 
-    // 导出选中 hexagons
     if (exportBtn) {
         exportBtn.addEventListener('click', () => {
             if (!window.mapLayers || window.mapLayers.selectedLayers.size === 0) {
@@ -61,10 +57,8 @@ export function initSelectionTools() {
         });
     }
 
-    // 初始更新
     updateCount();
 
-    // 挂载全局更新函数，保证 pie chart 可以调用
     if (!window.updateSelectionCount) {
         window.updateSelectionCount = updateCount;
     }
