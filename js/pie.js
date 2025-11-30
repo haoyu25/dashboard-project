@@ -56,7 +56,7 @@ export function initPieChart(matrix) {
                             const total = context.dataset.data.reduce((a,b)=>a+b,0);
                             const value = context.raw;
                             const percentage = ((value/total)*100).toFixed(1);
-                            return `${context.label}: ${value} (${percentage}%)`;
+                            return `${value} (${percentage}%)`;
                         }
                     }
                 },

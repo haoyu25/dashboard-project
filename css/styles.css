@@ -317,6 +317,76 @@ label {
     box-shadow: none !important;
 }
 
+.hex-tooltip {
+  margin: 0;
+  padding: 0;
+}
+
+.leaflet-interactive:focus,
+.leaflet-interactive:active,
+svg path:focus {
+  outline: none !important;
+}
+
+.hex-hover {
+  stroke: #ffffff !important;
+  stroke-width: 3px !important;
+}
+
+.hex-selected {
+  stroke: rgb(66, 77, 92) !important;          
+  stroke-width: 4px !important;
+  pointer-events: auto;
+}
+
+svg .hex-selected {
+  z-index: 1000 !important;
+}
+
+.hex-tooltip {
+  background: rgba(56, 56, 56, 0.599);
+  border: 0px;
+  border-radius: 4px;
+  padding: 1px 1px;
+  font-size: 8px;
+  box-shadow: 0 0px;
+  white-space: nowrap;
+  line-height: 1.2;
+  color: #ffffff;
+}
+
+.hex-tooltip .leaflet-tooltip-content {
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+.hex-tooltip.leaflet-tooltip-top::before,
+.hex-tooltip.leaflet-tooltip-bottom::before,
+.hex-tooltip.leaflet-tooltip-left::before,
+.hex-tooltip.leaflet-tooltip-right::before {
+  display: none !important;
+}
+
+.search-label {
+  background: none;
+  border: 0px;
+  border-radius: 0px;
+  padding: 0px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #2a333e;
+  box-shadow: 0 0px;
+  white-space: nowrap;
+}
+
+.search-label.leaflet-tooltip-top::before,
+.search-label.leaflet-tooltip-bottom::before,
+.search-label.leaflet-tooltip-left::before,
+.search-label.leaflet-tooltip-right::before {
+  display: none !important;
+}
+
 /* Legend */
 .legend-box {
     background: rgba(255, 255, 255, 0.567);
@@ -336,3 +406,16 @@ label {
 }
 
 /* map */
+.metro-label {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 0px;                 
+    padding: 0px;
+    border-radius: 4px;
+    font-size: 8px;
+    color: rgb(66, 77, 92);
+    box-shadow: 0px;
+}
+
+.metro-label .leaflet-tooltip-tip {
+    display: none;
+}

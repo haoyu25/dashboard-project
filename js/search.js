@@ -52,7 +52,7 @@ export function initSearch() {
         const layer = f.layer;
         const latlng = layer.getLatLng();
 
-        window.matrixMap.setView(latlng, 13);
+        window.matrixMap.setView(latlng, 15);
 
         resetAllIcons();
 
@@ -74,9 +74,9 @@ export function initSearch() {
         }
         layer._label = L.tooltip({
             permanent: true,
-            direction: 'top',
-            offset: [0, -10],
-            className: 'point-label'
+            direction: 'bottom',
+            offset: [0, 10],
+            className: 'search-label'
         })
         .setContent(f.name)
         .setLatLng(latlng);

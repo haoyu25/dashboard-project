@@ -17,39 +17,78 @@ function initializeMap(matrix) { // remember to input all the layers specify bel
   });
   baseTileLayer.addTo(map);
 
-  // initial matrix layer
-  initialMatrix = L.geoJSON(matrix,
-    {style: calMatrix,
-    }).bindTooltip((l) => {
-    return `
-    <p class="popbind">
-      <strong>Impervious Percentage:</strong> ${(l.feature.properties.pct_2025 * 100).toFixed(2)}%<br>
-  <strong>Inundation:</strong> ${l.feature.properties.inund_mean.toFixed(2)}
-    </p>`;
-  }).addTo(map);
+function hexTooltipContent(l) {
+  const imp = (l.feature.properties.pct_2025 * 100).toFixed(2);
+  const inu = l.feature.properties.inund_mean.toFixed(2);
 
-  //change to impervious layer;
-  impervious = L.geoJSON(matrix, 
-    {style: calImpervious,
-    }).bindTooltip((l) => {
-    return `
-    <p class="popbind">
-      <strong>Impervious Percentage:</strong> ${(l.feature.properties.pct_2025 * 100).toFixed(2)}%<br>
-  <strong>Inundation:</strong> ${l.feature.properties.inund_mean.toFixed(2)}
-    </p>`;
+  return `
+    <div class="hex-tooltip">
+      <strong>Imp </strong> ${imp}%<br>
+      <strong>Inu </strong> ${inu}
+    </div>
+  `;
+}
+
+const tooltipOptions = {
+  direction: "center", 
+  offset: [0, 0],      
+  opacity: 1,
+  className: "my-tooltip",
+  permanent: false
+};
+
+let selectedLayers = new Set();
+
+function attachHexEvents(layer) {
+
+  layer.unbindTooltip();
+  
+  layer.on("mouseover", () => {
+    if (!selectedLayers.has(layer)) {
+      L.DomUtil.addClass(layer._path, "hex-hover");
+    }
   });
-  //change to inundation layer;
-  inundation = L.geoJSON(matrix, 
-    {style: calInundation,
-    }).bindTooltip((l) => {
-    return `
-    <p class="popbind">
-      <strong>Impervious Percentage:</strong> ${(l.feature.properties.pct_2025 * 100).toFixed(2)}%<br>
-  <strong>Inundation:</strong> ${l.feature.properties.inund_mean.toFixed(2)}
-    </p>`;
+  
+  layer.on("mouseout", () => {
+    if (!selectedLayers.has(layer)) {
+      L.DomUtil.removeClass(layer._path, "hex-hover");
+    }
   });
 
-  map.fitBounds(initialMatrix.getBounds());
+  layer.on("click", () => {
+    if (selectedLayers.has(layer)) {
+      selectedLayers.delete(layer);
+      L.DomUtil.removeClass(layer._path, "hex-selected");
+      layer.unbindTooltip();
+    } else {
+      selectedLayers.add(layer);
+      L.DomUtil.addClass(layer._path, "hex-selected");
+      
+      layer.bindTooltip(hexTooltipContent(layer), {
+        ...tooltipOptions,
+        permanent: true 
+      }).openTooltip();
+    }
+  });
+}
+
+initialMatrix = L.geoJSON(matrix, {
+  style: calMatrix,
+  onEachFeature: (feature, layer) => attachHexEvents(layer)
+})
+.addTo(map);
+
+impervious = L.geoJSON(matrix, {
+  style: calImpervious,
+  onEachFeature: (feature, layer) => attachHexEvents(layer)
+})
+
+inundation = L.geoJSON(matrix, {
+  style: calInundation,
+  onEachFeature: (feature, layer) => attachHexEvents(layer)
+})
+
+map.fitBounds(initialMatrix.getBounds());
 
   //create legend
   legend = L.control({ position: 'bottomright' });
@@ -85,7 +124,7 @@ function resetLayers() {
   map.removeLayer(inundation);
 }
 
-document.getElementById("setmatrix").addEventListener("click", () => {
+document.getElementById("matrix").addEventListener("click", () => {
   resetLayers();
   initialMatrix.addTo(map);
   sliderContainer.style.display = "block";

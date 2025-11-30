@@ -32,27 +32,25 @@ export async function initApp(resetLeftSide = false) {
 
     window.metroIcon = L.icon({
         iconUrl: 'png/metrostationicon.png',
-        iconSize: [20, 20],
-        iconAnchor: [10, 10]
+        iconSize: [10, 10], iconAnchor: [5, 5]
     });
     window.metroIconHighlight = L.icon({
         iconUrl: 'png/metrostationicon_highlight.png',
-        iconSize: [40, 40],
-        iconAnchor: [20, 20]
+        iconSize: [30, 30], iconAnchor: [15, 15]
     });
 
     window.amenityIcons = {
-        school: L.icon({ iconUrl: "png/school.png", iconSize: [20, 20], iconAnchor: [10, 10] }),
-        hospital: L.icon({ iconUrl: "png/hospital.png", iconSize: [20, 20], iconAnchor: [10, 10] }),
-        market: L.icon({ iconUrl: "png/market.png", iconSize: [20, 20], iconAnchor: [10, 10] }),
+        school: L.icon({ iconUrl: "png/school.png", iconSize: [10, 10], iconAnchor: [5, 5] }),
+        hospital: L.icon({ iconUrl: "png/hospital.png", iconSize: [10, 10], iconAnchor: [5, 5] }),
+        market: L.icon({ iconUrl: "png/market.png", iconSize: [10, 10], iconAnchor: [5, 5] }),
     };
     window.amenityIconsHighlight = {
-        school: L.icon({ iconUrl: "png/school_hl.png", iconSize: [40, 40], iconAnchor: [20, 20] }),
-        hospital: L.icon({ iconUrl: "png/hospital_hl.png", iconSize: [40, 40], iconAnchor: [20, 20] }),
-        market: L.icon({ iconUrl: "png/market_hl.png", iconSize: [40, 40], iconAnchor: [20, 20] }),
+        school: L.icon({ iconUrl: "png/school_hl.png", iconSize: [30, 30], iconAnchor: [15, 15] }),
+        hospital: L.icon({ iconUrl: "png/hospital_hl.png", iconSize: [30, 30], iconAnchor: [15, 15] }),
+        market: L.icon({ iconUrl: "png/market_hl.png", iconSize: [30, 30], iconAnchor: [15, 15] }),
     };
-    window.defaultAmenityIcon = L.icon({ iconUrl: "png/market.png", iconSize: [20, 20], iconAnchor: [10, 10] });
-    window.defaultAmenityIconHighlight = L.icon({ iconUrl: "png/market_hl.png", iconSize: [40, 40], iconAnchor: [20, 20] });
+    window.defaultAmenityIcon = L.icon({ iconUrl: "png/market.png", iconSize: [10, 10], iconAnchor: [5, 5] });
+    window.defaultAmenityIconHighlight = L.icon({ iconUrl: "png/market_hl.png", iconSize: [30, 30], iconAnchor: [15, 15] });
 
     window.metroLayer = L.geoJSON(metro, {
         pane: 'metroPane',
@@ -61,7 +59,34 @@ export async function initApp(resetLeftSide = false) {
             const name = feature.properties.name || '';
             const address = feature.properties.address || '';
             const labelHtml = `<div style="text-align:center;"><strong>${name}</strong><br>${address}</div>`;
-            marker.bindTooltip(labelHtml, { permanent: true, direction: 'right', className: 'metro-label' });
+
+            marker.tooltipShown = false;
+            marker.isClicking = false;
+
+            marker.on('mouseover', () => {
+                if (marker.isClicking) return;
+
+                if (!marker.tooltipShown) {
+                    marker.bindTooltip(labelHtml, {
+                        permanent: true,
+                        direction: 'top',
+                        className: 'metro-label',
+                        opacity: 0.9
+                    }).openTooltip();
+                    marker.tooltipShown = true;
+                }
+            });
+            marker.on('click', () => {
+                marker.isClicking = true;
+                
+                if (marker.getTooltip()) {
+                    marker.unbindTooltip();
+                    marker.tooltipShown = false;
+                }     
+                setTimeout(() => {
+                    marker.isClicking = false;
+                }, 100);
+            });
             return marker;
         }
     });

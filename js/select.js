@@ -41,7 +41,7 @@ export function stationSelect() {
             }
         }
 
-        window.matrixMap.setView(latlng, 13);
+        window.matrixMap.setView(latlng, 15);
 
         layer.setIcon(window.metroIconHighlight);
 
@@ -50,9 +50,9 @@ export function stationSelect() {
         }
         layer._label = L.tooltip({
             permanent: true,
-            direction: 'top',
-            offset: [0, -10],
-            className: 'point-label'
+            direction: 'bottom',
+            offset: [0, 10],
+            className: 'search-label'
         })
         .setContent(selected)
         .setLatLng(latlng);
@@ -61,7 +61,6 @@ export function stationSelect() {
         previousLayer = layer;
     });
 }
-
 
 // select amenity
 export function amenitySelect() {
@@ -113,7 +112,7 @@ export function amenitySelect() {
             }
         }
 
-        window.matrixMap.setView(latlng, 13);
+        window.matrixMap.setView(latlng, 15);
 
         const highlightIcon = window.amenityIconsHighlight?.[category] || window.defaultAmenityIconHighlight;
         layer.setIcon(highlightIcon);
@@ -127,9 +126,9 @@ export function amenitySelect() {
         }
         layer._label = L.tooltip({
             permanent: true,
-            direction: 'top',
-            offset: [0, -10],
-            className: 'point-label'
+            direction: 'bottom',
+            offset: [0, 10],
+            className: 'search-label'
         })
         .setContent(selected)
         .setLatLng(latlng);
