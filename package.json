@@ -3,18 +3,18 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
+  "directories": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "css-lint": "stylelint --color  \"**/*.css\"",
+    "js-lint": "eslint --color **/*.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/haoyu25/dashboard-project.git"
-  },
-  "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/haoyu25/dashboard-project/issues"
-  },
-  "homepage": "https://github.com/haoyu25/dashboard-project#readme"
+  "devDependencies": {
+    "eslint": "^8.48.0",
+    "eslint-config-google": "^0.14.0",
+    "stylelint": "^15.11.0",
+    "stylelint-config-standard": "^34.0.0"
+  }
 }

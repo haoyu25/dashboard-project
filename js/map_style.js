@@ -1,4 +1,4 @@
-import { getImpThresholds, getInuThresholds} from './slider.js'; 
+import { getImpThresholds, getInuThresholds} from './slider.js';
 
 const colorMapMatrix = {
   'Low Impervious - Low Inundation': '#4575b4',
@@ -40,12 +40,12 @@ function calMatrix(feature) {
 
   return {
     stroke: true,
-    color: '#ffffffff', 
+    color: '#ffffffff',
     weight: 0.5,
     fillColor: color,
     fillOpacity: color === 'transparent' ? 0 : 0.8,
   };
-};
+}
 
 function calImpervious(feature) {
   const pct = feature.properties.pct_2025;
@@ -58,12 +58,12 @@ function calImpervious(feature) {
 
   return {
     stroke: true,
-    color: '#ffffffff', 
+    color: '#ffffffff',
     weight: 0.5,
     fillColor: color,
-    fillOpacity: 0.6
+    fillOpacity: 0.6,
   };
-  };
+}
 
 function calInundation(feature) {
   const inund = feature.properties.inund_mean;
@@ -76,12 +76,12 @@ function calInundation(feature) {
 
   return {
     stroke: true,
-    color: '#ffffffff', 
+    color: '#ffffffff',
     weight: 0.5,
     fillColor: color,
-    fillOpacity: 0.6
+    fillOpacity: 0.6,
   };
-  };
+}
 
 
 export { calMatrix };

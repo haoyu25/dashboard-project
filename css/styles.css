@@ -1,18 +1,19 @@
+/* stylelint-disable selector-class-pattern, selector-id-pattern */
+
 /* Reset body/html */
 html, body {
     padding: 0;
     margin: 0;
     height: 100%;
     overflow: hidden;
-    font-family: "Arial","SimHei", sans-serif;
+    font-family: Arial,SimHei, sans-serif;
     box-sizing: border-box;
 }
 
 /* Header */
 header {
     height: 7vh;
-    padding: 0;
-    background: linear-gradient(0deg,  rgb(212, 218, 220) 100%);
+    background: linear-gradient(0deg,  rgb(212 218 220) 100%);
     display: flex;
     align-items: center;
     justify-content: space-between; 
@@ -23,7 +24,7 @@ header {
     padding: 6px 16px;
     border: 2px solid #fff;
     border-radius: 20px;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgb(255 255 255 / 20%);
     color: #46707f;
     font-size: 0.9rem;
     font-weight: bold;
@@ -32,7 +33,7 @@ header {
 }
 
 #lang-toggle:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgb(255 255 255 / 30%);
     transform: scale(1.05);
 }
 
@@ -56,7 +57,7 @@ main {
     flex-direction: column;
     width: 30%;
     padding: 1rem;
-    background: rgb(242, 245, 242);
+    background: rgb(242 245 242);
     overflow-y: auto;
     gap: 0.5rem; 
     box-sizing: border-box;
@@ -66,7 +67,7 @@ label {
     display: block;         
     font-weight: bold;
     font-size: 1rem;     
-    color: rgb(66, 77, 92);
+    color: rgb(66 77 92);
     text-align: left;       
     width: 100%;
     margin: 0;    
@@ -87,38 +88,9 @@ label {
     flex-direction: column;
     gap: 0.2rem; 
     padding: 1rem;
-    background: rgba(255, 255, 255, 0.85);
+    background: rgb(255 255 255 / 85%);
     border-radius: 16px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.selection-row {
-    display: flex;
-    align-items: left;     
-    gap: 8px;      
-}
-
-#selected-count {
-    font-size: 16px;             
-    background-color: rgb(255, 255, 255);
-    padding: 2px 6px;              
-    border-radius: 4px;          
-    display: inline-block;   
-    color: #c30a00;        
-}
-
-.selection-row button {
-    padding: 0px 12px;
-    border-radius: 4px;
-    border: none;
-    background-color: #ffffff;
-    color: #46707f;
-    cursor: pointer;
-    font-size: 0.85rem;
-}
-
-.selection-row button:hover {
-    background-color: #99c4d5;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
 }
 
 /* Category buttons */
@@ -138,6 +110,36 @@ label {
     font-size: 0.85rem;
     cursor: pointer;
     transition: background-color 0.2s, transform 0.1s;
+}
+
+/* Selection row */
+.selection-row {
+    display: flex;
+    align-items: left;     
+    gap: 8px;      
+}
+
+#selected-count {
+    font-size: 16px;             
+    background-color: rgb(255 255 255);
+    padding: 2px 6px;              
+    border-radius: 4px;          
+    display: inline-block;   
+    color: #c30a00;        
+}
+
+.selection-row button {
+    padding: 0 12px;
+    border-radius: 4px;
+    border: none;
+    background-color: #fff;
+    color: #46707f;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.selection-row button:hover {
+    background-color: #99c4d5;
 }
 
 .category-buttons button:hover {
@@ -162,6 +164,7 @@ label {
     text-align: left;    
 }
 
+/* noUiSlider 第三方类名保留原样 */
 .noUi-target {
     height: 6px !important;     
     border-radius: 5px !important;       
@@ -179,9 +182,9 @@ label {
     height: 20px !important;
     border-radius: 50% !important;
     background: #95b4bf !important;
-    border: 1px solid #ffffff !important;
+    border: 1px solid #fff !important;
     cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 30%) !important;
     transition: transform 0.2s;
     top: -7px !important;           
     right: -10px !important;         
@@ -192,8 +195,8 @@ label {
     border-color: #2e4a55 !important;
 }
 
-.noUi-handle:before,
-.noUi-handle:after {
+.noUi-handle::before,
+.noUi-handle::after {
     display: none !important;
 }
 
@@ -232,7 +235,7 @@ label {
     border: 1px solid #ccc;
     border-left: 1px;
     border-radius: 4px;
-    background: #ffffff;
+    background: #fff;
     cursor: pointer;
     padding: 0;
     line-height: 1;
@@ -266,14 +269,13 @@ label {
 }
 
 .search-label {
-    background: none; /* 背景色 */
-    color: #333;             
-    font-size: 0.8rem;   
+    background: none; 
+    color: #333;   
     border: none;               
     font-weight: bold;
     padding: 1px;
     border-radius: 4px;
-    box-shadow: 0 0px;
+    box-shadow: 0 0;
     text-align: center;
     font-size: 10px;
 }
@@ -306,12 +308,12 @@ label {
 .map {
     flex: 1;
     min-height: 0;
-    height: 100%;        /* <- 关键修复：避免 offsetHeight = 0 */
+    height: 100%;
 }
 
 /* Metro label and hex */
 .metro-label {
-    background: rgba(255,255,255,0.8);
+    background: rgb(255 255 255 / 80%);
     border-radius: 4px;
     padding: 2px 4px;
     font-size: 8px;
@@ -320,8 +322,7 @@ label {
 
 .hex-tooltip {
     margin: 0;
-    padding: 0;
-    background: rgba(56, 56, 56, 0.6);
+    background: rgb(56 56 56 / 60%);
     border: 1px;
     border-radius: 4px;
     font-size: 8px;
@@ -343,9 +344,8 @@ label {
 
 /* Legend */
 .legend-box {
-    background: rgba(255, 255, 255, 0.567);
+    background: rgb(255 255 255 / 56.7%);
     border-radius: 6px;
-    font-size: 0.85rem;
     line-height: 18px;
     margin-bottom: 10px;
     padding: 6px;
@@ -361,7 +361,7 @@ label {
 }
 
 /* ----------- Mobile Responsive ----------- */
-@media (max-width: 768px) {
+@media (width <= 768px) {
     main {
         flex-direction: column; 
         height: 100vh;
@@ -390,7 +390,7 @@ label {
         font-size: 0.75rem;
     }
 
-    #riskPieChart {
+    #risk-pie-chart {
         width: 120px !important;
         height: 120px !important;
         margin: 0 auto;

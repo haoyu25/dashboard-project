@@ -1,13 +1,14 @@
+
 import { calMatrix, calImpervious, calInundation } from './map_style.js';
 import { onSliderChange } from './slider.js';
 import { matrixLegend, imperviousLegend, inundationLegend } from './legend_style.js';
 
-let initialMatrix, map, impervious, inundation;
+let initialMatrix; let map; let impervious; let inundation;
 let legend;
-let selectedLayers = new Set();
+const selectedLayers = new Set();
 let currentLayer;
 
-const sliderContainer = document.getElementById("slider-container");
+const sliderContainer = document.getElementById('slider-container');
 
 function initializeMap(matrix) {
   map = L.map('map', { zoomSnap: 0 }).setView([30.25, 120.15], 11);
@@ -19,7 +20,7 @@ function initializeMap(matrix) {
       zoomOffset: -1,
       tileSize: 512,
       attribution: `© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>`,
-    }
+    },
   );
   baseTileLayer.addTo(map);
 
@@ -35,31 +36,31 @@ function initializeMap(matrix) {
   }
 
   const tooltipOptions = {
-    direction: "center",
+    direction: 'center',
     offset: [0, 0],
     opacity: 1,
-    className: "hex-tooltip",
-    permanent: true
+    className: 'hex-tooltip',
+    permanent: true,
   };
 
   function attachHexEvents(layer) {
     layer.unbindTooltip();
 
-    layer.on("mouseover", () => {
-      if (!selectedLayers.has(layer)) L.DomUtil.addClass(layer._path, "hex-hover");
+    layer.on('mouseover', () => {
+      if (!selectedLayers.has(layer)) L.DomUtil.addClass(layer._path, 'hex-hover');
     });
-    layer.on("mouseout", () => {
-      if (!selectedLayers.has(layer)) L.DomUtil.removeClass(layer._path, "hex-hover");
+    layer.on('mouseout', () => {
+      if (!selectedLayers.has(layer)) L.DomUtil.removeClass(layer._path, 'hex-hover');
     });
 
-    layer.on("click", () => {
+    layer.on('click', () => {
       if (selectedLayers.has(layer)) {
         selectedLayers.delete(layer);
-        L.DomUtil.removeClass(layer._path, "hex-selected");
+        L.DomUtil.removeClass(layer._path, 'hex-selected');
         removeHexTooltip(layer);
       } else {
         selectedLayers.add(layer);
-        L.DomUtil.addClass(layer._path, "hex-selected");
+        L.DomUtil.addClass(layer._path, 'hex-selected');
         addHexTooltip(layer);
       }
 
@@ -71,12 +72,12 @@ function initializeMap(matrix) {
     if (!layer._tooltip) {
       layer._tooltip = L.tooltip({
         permanent: true,
-        direction: "center",
+        direction: 'center',
         offset: [0, 0],
-        className: "hex-tooltip"
+        className: 'hex-tooltip',
       })
-      .setContent(hexTooltipContent(layer))
-      .setLatLng(layer.getBounds().getCenter());
+        .setContent(hexTooltipContent(layer))
+        .setLatLng(layer.getBounds().getCenter());
       layer._tooltip.addTo(map);
     }
     updateHexTooltipVisibility(layer);
@@ -94,23 +95,23 @@ function initializeMap(matrix) {
     const zoom = map.getZoom();
     const el = layer._tooltip.getElement();
     if (el) {
-      el.style.display = (selectedLayers.has(layer) && zoom >= 12) ? "block" : "none";
+      el.style.display = (selectedLayers.has(layer) && zoom >= 12) ? 'block' : 'none';
     }
   }
 
   initialMatrix = L.geoJSON(matrix, {
     style: calMatrix,
-    onEachFeature: (feature, layer) => attachHexEvents(layer)
+    onEachFeature: (feature, layer) => attachHexEvents(layer),
   }).addTo(map);
 
   impervious = L.geoJSON(matrix, {
     style: calImpervious,
-    onEachFeature: (feature, layer) => attachHexEvents(layer)
+    onEachFeature: (feature, layer) => attachHexEvents(layer),
   });
 
   inundation = L.geoJSON(matrix, {
     style: calInundation,
-    onEachFeature: (feature, layer) => attachHexEvents(layer)
+    onEachFeature: (feature, layer) => attachHexEvents(layer),
   });
 
   map.fitBounds(initialMatrix.getBounds());
@@ -127,14 +128,14 @@ function initializeMap(matrix) {
   setLegend(matrixLegend);
 
   onSliderChange(() => {
-    initialMatrix.eachLayer(layer => layer.setStyle(calMatrix(layer.feature)));
+    initialMatrix.eachLayer((layer) => layer.setStyle(calMatrix(layer.feature)));
   });
 
   map.whenReady(() => map.invalidateSize());
-  window.addEventListener("resize", () => map.invalidateSize());
+  window.addEventListener('resize', () => map.invalidateSize());
 
-  map.on("zoomend", () => {
-    selectedLayers.forEach(layer => updateHexTooltipVisibility(layer));
+  map.on('zoomend', () => {
+    selectedLayers.forEach((layer) => updateHexTooltipVisibility(layer));
   });
 
   return map;
@@ -145,9 +146,8 @@ function setLegend(html) {
 }
 
 function resetLayers() {
-  selectedLayers.forEach(layer => {
-    L.DomUtil.removeClass(layer._path, "hex-selected");
-    removeHexTooltip(layer);
+  selectedLayers.forEach((layer) => {
+    L.DomUtil.removeClass(layer._path, 'hex-selected');
   });
   selectedLayers.clear();
 
@@ -161,23 +161,23 @@ function resetLayers() {
 function addLayerWithInvalidate(layer, legendHtml, showSlider = false) {
   resetLayers();
   layer.addTo(map);
-  sliderContainer.style.display = showSlider ? "block" : "none";
+  sliderContainer.style.display = showSlider ? 'block' : 'none';
   setLegend(legendHtml);
   currentLayer = layer;
   window.mapLayers.currentLayer = layer;
   map.invalidateSize();
 }
 
-document.getElementById("matrix").addEventListener("click", () =>
-  addLayerWithInvalidate(initialMatrix, matrixLegend, true)
+document.getElementById('matrix').addEventListener('click', () =>
+  addLayerWithInvalidate(initialMatrix, matrixLegend, true),
 );
 
-document.getElementById("impervious").addEventListener("click", () =>
-  addLayerWithInvalidate(impervious, imperviousLegend, false)
+document.getElementById('impervious').addEventListener('click', () =>
+  addLayerWithInvalidate(impervious, imperviousLegend, false),
 );
 
-document.getElementById("inundation").addEventListener("click", () =>
-  addLayerWithInvalidate(inundation, inundationLegend, false)
+document.getElementById('inundation').addEventListener('click', () =>
+  addLayerWithInvalidate(inundation, inundationLegend, false),
 );
 
 export { initializeMap, initialMatrix, impervious, inundation };
