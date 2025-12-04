@@ -1,7 +1,7 @@
 # Inundation Risk Index in Hangzhou Central Districts  
 [Live Dashboard](https://haoyu25.github.io/dashboard-project/)
 
-This dashboard is designed for government officials and urban planners in Hangzhou. It helps identify high-risk inundation areas in the city's central districts, allowing authorities to prioritize locations for mitigation actions. The risk index combines inundation probability with impervious surface percentage.
+This dashboard helps government officials and urban planners identify high-risk inundation areas in Hangzhou's central districts, allowing authorities to prioritize mitigation actions such as green infrastructure, drainage upgrades, and early-warning systems. The risk index combines inundation probability with impervious surface percentage.
 
 ---
 
